@@ -18,3 +18,12 @@ pkg_config("gtk") {
 pkg_config("egl") {
   packages = [ "egl" ]
 }
+
+pkg_config("wayland") {
+  packages = [
+    "wayland-client",
+    "wayland-egl",
+    "glesv2",
+    "egl",
+  ]
+}
