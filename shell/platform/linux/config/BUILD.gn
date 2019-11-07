@@ -2,11 +2,23 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//flutter/common/config.gni")
 import("//build/config/linux/pkg_config.gni")
 import("//flutter/shell/platform/linux/config.gni")
 
-pkg_config("x11") {
-  packages = [ "x11" ]
+if (use_wayland_backend) {
+  pkg_config("wayland") {
+    packages = [
+      "wayland-client",
+      "wayland-egl",
+      "glesv2",
+      "egl",
+    ]
+  }
+} else {
+  pkg_config("x11") {
+    packages = [ "x11" ]
+  }
 }
 
 if (build_linux_shell) {
@@ -16,13 +28,4 @@ if (build_linux_shell) {
   pkg_config("egl") {
     packages = [ "egl" ]
   }
-}
-
-pkg_config("wayland") {
-  packages = [
-    "wayland-client",
-    "wayland-egl",
-    "glesv2",
-    "egl",
-  ]
 }
