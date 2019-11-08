@@ -47,6 +47,8 @@ source_set("flutter_glfw") {
   configs +=
       [ "//flutter/shell/platform/common/cpp:desktop_library_implementation" ]
 
+  defines = [ "GLFW_INCLUDE_ES2" ]
+
   deps = [
     ":flutter_glfw_headers",
     "//build/secondary/third_party/glfw",
