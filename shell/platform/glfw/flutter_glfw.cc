@@ -139,14 +139,23 @@ static FlutterDesktopWindowControllerState* GetSavedWindowState(
       glfwGetWindowUserPointer(window));
 }
 
+
+// Sets additional hints for GLFW
+static void FlutterSetFLGWHints() {
+  // Prefer EGL API
+  glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_ES_API);
+  // Prefer GLESv2
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
+
+  glfwWindowHint(GLFW_CONTEXT_CREATION_API, GLFW_EGL_CONTEXT_API);
+}
+
 // Creates and returns an invisible GLFW window that shares |window|'s resource
 // context.
 static UniqueGLFWwindowPtr CreateShareWindowForWindow(GLFWwindow* window) {
+  FlutterSetFLGWHints();
   glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);
   glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
-#if defined(__linux__)
-  glfwWindowHint(GLFW_CONTEXT_CREATION_API, GLFW_EGL_CONTEXT_API);
-#endif
   GLFWwindow* share_window = glfwCreateWindow(1, 1, "", NULL, window);
   glfwDefaultWindowHints();
   return UniqueGLFWwindowPtr(share_window, glfwDestroyWindow);
@@ -588,9 +597,7 @@ FlutterDesktopWindowControllerRef FlutterDesktopCreateWindow(
   if (window_properties.prevent_resize) {
     glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
   }
-#if defined(__linux__)
-  glfwWindowHint(GLFW_CONTEXT_CREATION_API, GLFW_EGL_CONTEXT_API);
-#endif
+  FlutterSetFLGWHints();
   state->window = UniqueGLFWwindowPtr(
       glfwCreateWindow(window_properties.width, window_properties.height,
                        window_properties.title, NULL, NULL),
