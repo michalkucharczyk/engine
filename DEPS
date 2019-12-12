@@ -137,7 +137,7 @@ allowed_hosts = [
 ]
 
 deps = {
-  'src': 'https://github.com/dwrobel/buildroot.git',
+  'src': 'https://github.com/dwrobel/buildroot.git@dw-3',
 
    # Fuchsia compatibility
    #
