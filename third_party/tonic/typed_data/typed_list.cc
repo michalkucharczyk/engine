@@ -69,7 +69,9 @@ template <Dart_TypedData_Type kTypeName, typename ElemType>
 void DartConverter<TypedList<kTypeName, ElemType>>::SetReturnValue(
     Dart_NativeArguments args,
     TypedList<kTypeName, ElemType> val) {
-  Dart_SetReturnValue(args, val.dart_handle());
+  Dart_Handle result = val.dart_handle();
+  val.Release();
+  Dart_SetReturnValue(args, result);
 }
 
 template <Dart_TypedData_Type kTypeName, typename ElemType>
