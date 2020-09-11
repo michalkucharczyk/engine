@@ -30,3 +30,7 @@ pkg_config("gtk") {
 pkg_config("egl") {
   packages = [ "egl" ]
 }
+
+pkg_config("wayland-egl") {
+  packages = [ "wayland-egl" ]
+}
