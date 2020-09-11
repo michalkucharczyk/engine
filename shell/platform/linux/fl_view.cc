@@ -10,13 +10,14 @@
 #include "flutter/shell/platform/linux/fl_platform_plugin.h"
 #include "flutter/shell/platform/linux/fl_plugin_registrar_private.h"
 #include "flutter/shell/platform/linux/fl_renderer_wayland.h"
+#ifndef USE_ONLY_WAYLAND_BACKEND
 #include "flutter/shell/platform/linux/fl_renderer_x11.h"
+#endif
 #include "flutter/shell/platform/linux/fl_text_input_plugin.h"
 #include "flutter/shell/platform/linux/public/flutter_linux/fl_engine.h"
 #include "flutter/shell/platform/linux/public/flutter_linux/fl_plugin_registry.h"
 
 #include <gdk/gdkwayland.h>
-#include <gdk/gdkx.h>
 
 static constexpr int kMicrosecondsPerMillisecond = 1000;
 
@@ -134,9 +135,12 @@ static void fl_view_constructed(GObject* object) {
   FlView* self = FL_VIEW(object);
 
   GdkDisplay* display = gtk_widget_get_display(GTK_WIDGET(self));
+#ifndef USE_ONLY_WAYLAND_BACKEND
   if (GDK_IS_X11_DISPLAY(display)) {
     self->renderer = FL_RENDERER(fl_renderer_x11_new());
-  } else if (GDK_IS_WAYLAND_DISPLAY(display)) {
+  } else
+#endif
+  if (GDK_IS_WAYLAND_DISPLAY(display)) {
     self->renderer = FL_RENDERER(fl_renderer_wayland_new());
   } else {
     g_error("Unsupported GDK backend");
