@@ -8,6 +8,7 @@
 #include "flutter/shell/platform/linux/public/flutter_linux/fl_standard_method_codec.h"
 
 #include <gtk/gtk.h>
+#include <cstring>
 
 static constexpr char kChannelName[] = "flutter/mousecursor";
 static constexpr char kBadArgumentsError[] = "Bad Arguments";

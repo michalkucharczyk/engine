@@ -7,6 +7,7 @@
 #include "flutter/shell/platform/linux/public/flutter_linux/fl_method_channel.h"
 
 #include <gtk/gtk.h>
+#include <cstring>
 
 static constexpr char kChannelName[] = "flutter/platform";
 static constexpr char kBadArgumentsError[] = "Bad Arguments";

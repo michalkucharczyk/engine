@@ -18,6 +18,7 @@
 #include "flutter/shell/platform/linux/public/flutter_linux/fl_plugin_registry.h"
 
 #include <gdk/gdkwayland.h>
+#include <cstring>
 
 static constexpr int kMicrosecondsPerMillisecond = 1000;
 
