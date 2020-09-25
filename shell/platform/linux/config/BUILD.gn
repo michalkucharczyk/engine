@@ -24,7 +24,10 @@ if (use_wayland_backend) {
 }
 
 pkg_config("gtk") {
-  packages = [ "gtk+-3.0" ]
+  packages = [
+    "gtk+-3.0",
+    "wayland-client",
+  ]
 }
 
 pkg_config("egl") {
